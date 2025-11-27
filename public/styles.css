@@ -1,0 +1,724 @@
+/* ==============================
+   RESETEO Y BASE
+============================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 75% 50%, rgba(186,139,43,0.35) 0%, rgba(0,0,0,0.9) 80%),
+    linear-gradient(135deg, #0a0a0a 0%, #1b1204 40%, #d2a642 100%);
+  background-blend-mode: overlay;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* ==============================
+   HEADER / LOGO / MENÚ
+============================== */
+
+.header {
+  padding: 24px 24px 0;
+}
+
+/* fila superior: logo centrado, buscador a la derecha */
+.header-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+/* logo en la columna del medio */
+.logo-area {
+  grid-column: 2;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #e3b64e;
+  justify-self: center;
+}
+
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 2px solid #e3b64e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.logo-text {
+  font-size: 20px;
+  letter-spacing: 0.25em;
+  text-indent: 0.25em;
+  font-weight: 500;
+}
+
+/* ==============================
+   BUSCADOR
+============================== */
+
+.search-area {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform-origin: right center;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.search-area.open {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.search-icon {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 2px solid #e3b64e;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: box-shadow 0.25s ease, background 0.25s ease, transform 0.2s ease;
+}
+
+.search-icon:hover {
+  box-shadow: 0 0 12px rgba(227, 182, 78, 0.8);
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-1px);
+}
+
+/* círculo de la lupa */
+.search-icon::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #e3b64e;
+  top: 6px;
+  left: 6px;
+}
+
+/* palito de la lupa */
+.search-icon::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background: #e3b64e;
+  transform: rotate(45deg);
+  bottom: 7px;
+  right: 6px;
+}
+
+.search-input {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  background: rgba(0, 0, 0, 0.7);
+  color: #f8e9b5;
+  outline: none;
+  border: 1px solid rgba(227, 182, 78, 0.7);
+  transition: width 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+}
+
+.search-area.open .search-input {
+  width: 240px;
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* ==============================
+   MENÚ (centrado)
+============================== */
+
+.nav-menu {
+  margin-top: 24px;
+  border-top: 1px solid rgba(227, 182, 78, 0.4);
+  padding-top: 18px;
+}
+
+.nav-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 54px;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  color: #e3b64e;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 4px 0;
+  transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 0.8;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #f4d58a, #f5b65a);
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover {
+  color: #fff0c2;
+  opacity: 1;
+}
+
+.nav-link:hover::after,
+.nav-link-active::after {
+  width: 100%;
+}
+
+.nav-link-active {
+  color: #f4e1a0;
+  opacity: 1;
+}
+
+/* ==============================
+   SECCIÓN DE PERFUMES
+============================== */
+
+.perfume-section {
+  max-width: 1150px;
+  margin: 60px auto 100px;
+  padding: 0 24px 60px;
+}
+
+/* título general si lo usas */
+.perfume-section-title {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #f8e9b5;
+  margin-bottom: 26px;
+}
+
+.perfume-section-subtitle {
+  text-align: center;
+  font-size: 13px;
+  color: #efe4c0;
+  max-width: 520px;
+  margin: 0 auto 32px;
+  opacity: 0.9;
+}
+
+.cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 42px; /* más aire entre módulos */
+}
+
+/* Cuando solo hay 1 resultado (desktop/flex) */
+.cards-grid.single-result {
+  justify-content: center;
+}
+
+/* ==============================
+   TARJETA DE PERFUME
+============================== */
+
+.perfume-card {
+  position: relative;
+  background: radial-gradient(circle at top, #2b2420 0%, #16151a 45%, #44301a 100%);
+  border-radius: 38px;
+  width: 320px;
+  max-width: 100%;
+  overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(255, 240, 190, 0.06);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  /* animación de entrada */
+  opacity: 0;
+  transform: translateY(12px);
+  animation: cardIn 0.5s ease-out forwards;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+/* borde fino dorado suave */
+.perfume-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 215, 160, 0.28);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+/* pequeños delays para las primeras cards */
+.perfume-card:nth-child(2) { animation-delay: 0.05s; }
+.perfume-card:nth-child(3) { animation-delay: 0.1s; }
+.perfume-card:nth-child(4) { animation-delay: 0.15s; }
+.perfume-card:nth-child(5) { animation-delay: 0.2s; }
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.perfume-card:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.95),
+    0 0 32px rgba(250, 216, 145, 0.4);
+  background: radial-gradient(circle at top, #3a2815 0, #07030c 50%, #422711 100%);
+}
+
+.perfume-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.perfume-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1.01);
+  transition: transform 0.3s ease;
+}
+
+.perfume-card:hover .perfume-image img {
+  transform: scale(1.04);
+}
+
+.perfume-content {
+  padding: 22px 24px 26px;
+}
+
+.perfume-name {
+  margin: 0 0 16px;
+  font-size: 21px;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #fff;
+}
+
+.perfume-name span {
+  font-weight: 600;
+  color: #f8e9b5;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.perfume-desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  font-weight: 300;
+  color: #fffdf6;
+  opacity: 0.95;
+}
+
+/* presentaciones / decants */
+.decant-size,
+.formats {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff7bf;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.9;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media (max-width: 1024px) {
+  .cards-grid {
+    gap: 34px;
+  }
+
+  .perfume-section {
+    margin: 50px auto 80px;
+    padding: 0 18px 50px;
+  }
+}
+
+/* 📱 Móvil: 2 perfumes por fila + header adaptado */
+@media (max-width: 768px) {
+
+  .header {
+    padding: 20px 14px 0;
+  }
+
+  .header-top {
+    grid-template-columns: 1fr auto;  /* logo izquierda, buscador derecha */
+  }
+
+  .logo-area {
+    grid-column: 1;
+    justify-self: flex-start;
+    align-items: flex-start;
+  }
+
+  .logo-text {
+    font-size: 18px;
+    letter-spacing: 0.18em;
+  }
+
+  .nav-menu {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  .nav-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    white-space: nowrap;
+  }
+
+  .nav-link {
+    letter-spacing: 0.15em;
+    font-size: 11px;
+  }
+
+  .perfume-section {
+    margin: 28px auto 50px;
+    padding: 0 14px 36px;
+  }
+
+  /* grid de 2 columnas en móvil */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;            /* más separación entre tarjetas en móvil */
+    justify-items: center;
+  }
+
+  /* cuando sólo hay 1 resultado en móvil → 1 columna centrada */
+  .cards-grid.single-result {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .perfume-card {
+    width: 100%;
+    max-width: 190px;
+    border-radius: 26px;
+  }
+
+  .perfume-content {
+    padding: 12px 11px 16px;
+  }
+
+  .perfume-name {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .perfume-name span {
+    font-size: 11px;
+  }
+
+  .perfume-desc {
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .decant-size,
+  .formats {
+    font-size: 9px;
+    margin-bottom: 6px;
+  }
+
+  .search-area.open .search-input {
+    width: 170px;
+  }
+}
+
+/* ==============================
+   DETALLE
+============================== */
+
+::selection {
+  background-color: #e3b64e;
+  color: #000;
+}
+.perfume-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.perfume-actions button {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s;
+}
+
+/* Agregar al carrito */
+.btn-add-cart {
+  background: rgba(0, 0, 0, 0.75);
+  color: #f8e9b5;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+
+/* Consultar */
+.btn-wpp-one {
+  background: #25d366;
+  color: #0b1a0b;
+}
+
+/* Hover */
+.perfume-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.35);
+}
+
+/* carrito en el header */
+.cart-icon {
+  position: relative;
+  margin-left: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 2px solid #e3b64e;
+  background: transparent;
+  color: #e3b64e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 999px;
+  background: #e53935;
+  color: #fff;
+  font-size: 10px;
+  display: none;           /* se muestra desde JS */
+  align-items: center;
+  justify-content: center;
+}
+/* Fila de botones */
+/* Contenedor de la fila de botones */
+.button-row {
+  display: flex;
+  gap: 10px;        /* separación entre botones */
+  margin-top: 14px;
+  width: 100%;
+}
+
+/* Ambos botones ocupan el mismo ancho */
+.btn-add-cart,
+.btn-wpp-one {
+  flex: 1 1 0;               /* 🔥 mismo ancho para ambos */
+  display: flex;
+  justify-content: center;   /* centra el texto dentro */
+  align-items: center;
+}
+/* ===== Ajuste botones en CELULAR ===== */
+@media (max-width: 768px) {
+  /* Asegúrate que el contenedor padre permita el centrado */
+  .product-card,
+  .perfume-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .button-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 14px;
+  }
+
+  .btn-add-cart,
+  .btn-wpp-one {
+    flex: none;
+    width: 100%;
+    max-width: 160px;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+/* ======= CAJA DE PRECIOS ELEGANTE ======= */
+.price-box {
+  margin: 12px 0 18px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 220, 150, 0.18);
+  backdrop-filter: blur(3px);
+}
+
+.price-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #f8e9b5;
+  margin-bottom: 6px;
+}
+
+.price-line {
+  font-size: 12px;
+  color: #ffffff;
+  margin: 3px 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}
+
+.price-line span {
+  color: #f4d58a;
+  font-weight: 600;
+}
+/* ===== TEXTO MÁS GRANDE PARA MARCA Y NOMBRE ===== */
+.perfume-name {
+  font-size: 26px;        /* antes 21px */
+  line-height: 1.18;
+  margin-bottom: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.perfume-name span {
+  font-size: 15px;        /* antes 13px */
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #f8e9b5;
+}
+.logo-click {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.logo-click:hover {
+  opacity: 0.85; /* pequeña animación opcional */
+}
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.admin-btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid #d4af37;
+  background: transparent;
+  color: #fffbe5;
+  transition: 0.2s ease-in-out;
+}
+
+.admin-btn-primary {
+  background: #d4af37;
+  color: #000;
+}
+
+.admin-btn-danger {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.admin-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+.admin-mini-btn {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  text-decoration: none;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  transition: 0.2s ease-in-out;
+}
+
+.admin-mini-btn-danger {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+.admin-mini-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
