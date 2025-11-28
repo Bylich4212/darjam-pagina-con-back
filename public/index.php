@@ -8,8 +8,9 @@ require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/PerfumeController.php';
 require_once __DIR__ . '/../app/controllers/AdminController.php';
 
+// 👇 Por defecto: controlador "perfume", acción "home"
 $controller = $_GET['c'] ?? 'perfume';
-$action     = $_GET['a'] ?? 'index';
+$action     = $_GET['a'] ?? 'home';
 
 switch ($controller) {
     case 'auth':

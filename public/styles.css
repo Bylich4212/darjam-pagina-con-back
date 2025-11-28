@@ -739,3 +739,40 @@ body {
     height: 72px;     /* ⭐ Tamaño móvil */
   }
 }
+/* Toda la card se organiza en columna */
+.perfume-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* El contenido ocupa todo el alto disponible */
+.perfume-card .perfume-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                  /* ocupa el espacio vertical */
+}
+
+/* Caja de precios como ya la tenías */
+.price-box {
+  margin: 20px 0 10px;
+}
+
+/* 🔥 Descripción con altura fija para que no mueva los botones */
+.perfume-desc {
+  margin: 8px 0 16px;
+  min-height: 40px;         /* probá 40–60px según cuántas líneas querés */
+  line-height: 1.4;
+}
+
+/* Botones SIEMPRE al fondo de la card */
+.perfume-actions {
+  margin-top: auto;         /* empuja los botones hacia abajo */
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Que todas las cards del grid estiren igual */
+.cards-grid {
+  align-items: stretch;
+}
