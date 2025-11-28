@@ -3,6 +3,7 @@
 
 class Perfume
 {
+    // Para mostrar perfumes en la página de perfumes
     public static function allPerfumes()
     {
         $pdo = Database::getConnection();
@@ -10,6 +11,7 @@ class Perfume
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Para mostrar decants en la página de decants
     public static function allDecants()
     {
         $pdo = Database::getConnection();
@@ -17,7 +19,7 @@ class Perfume
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 🔹 Todos (para panel admin: perfumes + decants)
+    // Para el panel admin (lista completa)
     public static function all()
     {
         $pdo = Database::getConnection();
@@ -25,7 +27,7 @@ class Perfume
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 🔹 Uno por ID (para editar / borrar)
+    // Buscar un perfume por ID
     public static function find($id)
     {
         $pdo = Database::getConnection();
@@ -34,20 +36,22 @@ class Perfume
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Crear perfume / decant
     public static function create($data)
     {
         $pdo = Database::getConnection();
 
         $stmt = $pdo->prepare("
             INSERT INTO perfumes 
-            (nombre, marca, tipo, precio_100ml, precio_5ml, precio_10ml, descripcion, imagen, created_by)
-            VALUES (:nombre, :marca, :tipo, :precio_100ml, :precio_5ml, :precio_10ml, :descripcion, :imagen, :created_by)
+            (nombre, marca, tipo, ml_principal, precio_100ml, precio_5ml, precio_10ml, descripcion, imagen, created_by)
+            VALUES (:nombre, :marca, :tipo, :ml_principal, :precio_100ml, :precio_5ml, :precio_10ml, :descripcion, :imagen, :created_by)
         ");
 
         $stmt->execute([
             ':nombre'       => $data['nombre'],
             ':marca'        => $data['marca'],
             ':tipo'         => $data['tipo'],
+            ':ml_principal' => $data['ml_principal'],
             ':precio_100ml' => $data['precio_100ml'],
             ':precio_5ml'   => $data['precio_5ml'],
             ':precio_10ml'  => $data['precio_10ml'],
@@ -57,21 +61,22 @@ class Perfume
         ]);
     }
 
-    // 🔹 Actualizar
+    // Actualizar perfume / decant
     public static function update($id, $data)
     {
         $pdo = Database::getConnection();
 
         $stmt = $pdo->prepare("
             UPDATE perfumes
-            SET nombre = :nombre,
-                marca = :marca,
-                tipo = :tipo,
+            SET nombre       = :nombre,
+                marca        = :marca,
+                tipo         = :tipo,
+                ml_principal = :ml_principal,
                 precio_100ml = :precio_100ml,
-                precio_5ml = :precio_5ml,
-                precio_10ml = :precio_10ml,
-                descripcion = :descripcion,
-                imagen = :imagen
+                precio_5ml   = :precio_5ml,
+                precio_10ml  = :precio_10ml,
+                descripcion  = :descripcion,
+                imagen       = :imagen
             WHERE id = :id
         ");
 
@@ -80,6 +85,7 @@ class Perfume
             ':nombre'       => $data['nombre'],
             ':marca'        => $data['marca'],
             ':tipo'         => $data['tipo'],
+            ':ml_principal' => $data['ml_principal'],
             ':precio_100ml' => $data['precio_100ml'],
             ':precio_5ml'   => $data['precio_5ml'],
             ':precio_10ml'  => $data['precio_10ml'],
@@ -88,7 +94,7 @@ class Perfume
         ]);
     }
 
-    // 🔹 Borrar (registro + imagen)
+    // Eliminar perfume (y su imagen)
     public static function delete($id)
     {
         $pdo = Database::getConnection();
@@ -98,7 +104,7 @@ class Perfume
             return false;
         }
 
-        // borrar imagen física
+        // Borrar imagen física
         $ruta = __DIR__ . '/../../public/' . $perfume['imagen'];
         if (file_exists($ruta)) {
             unlink($ruta);

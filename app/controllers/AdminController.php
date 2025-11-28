@@ -11,7 +11,7 @@ class AdminController
         }
     }
 
-    // 🔹 Menú + formulario de agregar
+    // Pantalla de "Agregar perfume/decant" + botones admin
     public function createPerfumeForm()
     {
         $this->checkAuth();
@@ -21,7 +21,7 @@ class AdminController
         require __DIR__ . '/../views/admin/perfumes_create.php';
     }
 
-    // 🔹 Guardar nuevo perfume/decant
+    // Guardar nuevo perfume/decant
     public function savePerfume()
     {
         $this->checkAuth();
@@ -29,6 +29,8 @@ class AdminController
         $nombre      = $_POST['nombre']       ?? '';
         $marca       = $_POST['marca']        ?? '';
         $tipo        = $_POST['tipo']         ?? 'perfume';
+        $mlPrincipal = $_POST['ml_principal'] ?? 100;
+
         $precio100   = $_POST['precio_100ml'] ?? null;
         $precio5     = $_POST['precio_5ml']   ?? null;
         $precio10    = $_POST['precio_10ml']  ?? null;
@@ -40,12 +42,17 @@ class AdminController
             return;
         }
 
-        // strings vacíos -> NULL
+        // Normalizar precios (vacío -> NULL)
         $precio100 = ($precio100 === '' ? null : $precio100);
         $precio5   = ($precio5   === '' ? null : $precio5);
         $precio10  = ($precio10  === '' ? null : $precio10);
 
-        // Imagen obligatoria al crear
+        // Normalizar tamaño principal
+        if ($mlPrincipal === '' || !is_numeric($mlPrincipal)) {
+            $mlPrincipal = 100;
+        }
+
+        // Manejo de imagen obligatoria al crear
         if (!isset($_FILES['imagen']) || $_FILES['imagen']['error'] !== UPLOAD_ERR_OK) {
             $error = "Error al subir la imagen. Asegurate de seleccionar un archivo válido.";
             require __DIR__ . '/../views/admin/perfumes_create.php';
@@ -72,6 +79,7 @@ class AdminController
             'nombre'       => $nombre,
             'marca'        => $marca,
             'tipo'         => $tipo,
+            'ml_principal' => (int)$mlPrincipal,
             'precio_100ml' => $precio100,
             'precio_5ml'   => $precio5,
             'precio_10ml'  => $precio10,
@@ -84,7 +92,7 @@ class AdminController
         require __DIR__ . '/../views/admin/perfumes_create.php';
     }
 
-    // 🔹 Lista admin (para MODIFICAR y ELIMINAR)
+    // Lista para MODIFICAR / ELIMINAR
     public function listPerfumes()
     {
         $this->checkAuth();
@@ -94,7 +102,7 @@ class AdminController
         require __DIR__ . '/../views/admin/perfumes_list.php';
     }
 
-    // 🔹 Formulario para editar uno
+    // Formulario de edición
     public function editPerfumeForm()
     {
         $this->checkAuth();
@@ -112,7 +120,7 @@ class AdminController
         require __DIR__ . '/../views/admin/perfume_edit.php';
     }
 
-    // 🔹 Guardar cambios de edición
+    // Guardar cambios de edición
     public function updatePerfume()
     {
         $this->checkAuth();
@@ -130,6 +138,8 @@ class AdminController
         $nombre      = $_POST['nombre']       ?? '';
         $marca       = $_POST['marca']        ?? '';
         $tipo        = $_POST['tipo']         ?? 'perfume';
+        $mlPrincipal = $_POST['ml_principal'] ?? ($perfumeActual['ml_principal'] ?? 100);
+
         $precio100   = $_POST['precio_100ml'] ?? null;
         $precio5     = $_POST['precio_5ml']   ?? null;
         $precio10    = $_POST['precio_10ml']  ?? null;
@@ -142,12 +152,16 @@ class AdminController
             return;
         }
 
-        // strings vacíos -> NULL
+        // Normalizar precios
         $precio100 = ($precio100 === '' ? null : $precio100);
         $precio5   = ($precio5   === '' ? null : $precio5);
         $precio10  = ($precio10  === '' ? null : $precio10);
 
-        // Imagen: opcional en edición
+        if ($mlPrincipal === '' || !is_numeric($mlPrincipal)) {
+            $mlPrincipal = $perfumeActual['ml_principal'] ?? 100;
+        }
+
+        // Imagen: opcional al editar
         $rutaImagen = $perfumeActual['imagen'];
 
         if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
@@ -179,6 +193,7 @@ class AdminController
             'nombre'       => $nombre,
             'marca'        => $marca,
             'tipo'         => $tipo,
+            'ml_principal' => (int)$mlPrincipal,
             'precio_100ml' => $precio100,
             'precio_5ml'   => $precio5,
             'precio_10ml'  => $precio10,
@@ -190,7 +205,7 @@ class AdminController
         exit;
     }
 
-    // 🔹 Eliminar (ya usando Perfume::delete)
+    // Eliminar perfume / decant
     public function deletePerfume()
     {
         $this->checkAuth();

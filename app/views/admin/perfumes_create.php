@@ -13,7 +13,7 @@
 <main class="perfume-section">
   <div style="max-width:600px; margin:40px auto; color:#fffbe5;">
 
-    <!-- 🔥 TIRA DE BOTONES ADMIN -->
+    <!-- Botones admin -->
     <div class="admin-actions">
       <a href="index.php?c=admin&a=createPerfumeForm" class="admin-btn admin-btn-primary">
         Agregar
@@ -47,7 +47,16 @@
         <option value="decant">Decant</option>
       </select>
 
-      <input type="number" step="0.01" name="precio_100ml" placeholder="Precio 100ml (opcional)">
+      <!-- Tamaño principal (ml) -->
+      <input
+        type="number"
+        name="ml_principal"
+        min="1"
+        value="100"
+        placeholder="Tamaño principal (ml, ej: 100)"
+      >
+
+      <input type="number" step="0.01" name="precio_100ml" placeholder="Precio tamaño principal (opcional)">
       <input type="number" step="0.01" name="precio_5ml" placeholder="Precio 5ml (opcional)">
       <input type="number" step="0.01" name="precio_10ml" placeholder="Precio 10ml (opcional)">
 

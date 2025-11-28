@@ -33,11 +33,21 @@
     <form action="index.php?c=admin&a=updatePerfume" method="post" enctype="multipart/form-data" style="display:flex; flex-direction:column; gap:12px;">
       <input type="hidden" name="id" value="<?php echo $perfume['id']; ?>">
 
-      <input type="text" name="nombre" placeholder="Nombre del perfume"
-             value="<?php echo htmlspecialchars($perfume['nombre']); ?>" required>
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Nombre del perfume"
+        value="<?php echo htmlspecialchars($perfume['nombre']); ?>"
+        required
+      >
 
-      <input type="text" name="marca" placeholder="Marca"
-             value="<?php echo htmlspecialchars($perfume['marca']); ?>" required>
+      <input
+        type="text"
+        name="marca"
+        placeholder="Marca"
+        value="<?php echo htmlspecialchars($perfume['marca']); ?>"
+        required
+      >
 
       <select name="tipo">
         <option value="perfume" <?php echo $perfume['tipo'] === 'perfume' ? 'selected' : ''; ?>>
@@ -48,21 +58,45 @@
         </option>
       </select>
 
-      <input type="number" step="0.01" name="precio_100ml"
-             placeholder="Precio 100ml (opcional)"
-             value="<?php echo htmlspecialchars($perfume['precio_100ml']); ?>">
+      <!-- Tamaño principal (ml) -->
+      <input
+        type="number"
+        name="ml_principal"
+        min="1"
+        value="<?php echo htmlspecialchars($perfume['ml_principal'] ?? 100); ?>"
+        placeholder="Tamaño principal (ml)"
+      >
 
-      <input type="number" step="0.01" name="precio_5ml"
-             placeholder="Precio 5ml (opcional)"
-             value="<?php echo htmlspecialchars($perfume['precio_5ml']); ?>">
+      <input
+        type="number"
+        step="0.01"
+        name="precio_100ml"
+        placeholder="Precio tamaño principal (opcional)"
+        value="<?php echo htmlspecialchars($perfume['precio_100ml']); ?>"
+      >
 
-      <input type="number" step="0.01" name="precio_10ml"
-             placeholder="Precio 10ml (opcional)"
-             value="<?php echo htmlspecialchars($perfume['precio_10ml']); ?>">
+      <input
+        type="number"
+        step="0.01"
+        name="precio_5ml"
+        placeholder="Precio 5ml (opcional)"
+        value="<?php echo htmlspecialchars($perfume['precio_5ml']); ?>"
+      >
 
-      <textarea name="descripcion" rows="4" placeholder="Descripción breve" required><?php
-        echo htmlspecialchars($perfume['descripcion']);
-      ?></textarea>
+      <input
+        type="number"
+        step="0.01"
+        name="precio_10ml"
+        placeholder="Precio 10ml (opcional)"
+        value="<?php echo htmlspecialchars($perfume['precio_10ml']); ?>"
+      >
+
+      <textarea
+        name="descripcion"
+        rows="4"
+        placeholder="Descripción breve"
+        required
+      ><?php echo htmlspecialchars($perfume['descripcion']); ?></textarea>
 
       <div style="margin-top:10px;">
         <p>Imagen actual:</p>

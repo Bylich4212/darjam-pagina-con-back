@@ -722,3 +722,20 @@ body {
   transform: translateY(-1px);
   filter: brightness(1.1);
 }
+.logo-area {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 90px;       /* ⭐ AJUSTADO PARA QUE SEA COMO EL ANTERIOR */
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .logo-img {
+    height: 72px;     /* ⭐ Tamaño móvil */
+  }
+}
