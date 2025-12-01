@@ -48,8 +48,19 @@
         value="<?php echo htmlspecialchars($perfume['marca']); ?>"
         required
       >
+      
+      <label style="font-size:14px; margin-bottom:-5px; color:#f4d58a;">Estado:</label>
+      <select name="activo" style="padding:10px;">
+        <option value="1" <?php echo ($perfume['activo'] == 1) ? 'selected' : ''; ?>>
+           Activo (Visible en tienda)
+        </option>
+        <option value="0" <?php echo ($perfume['activo'] == 0) ? 'selected' : ''; ?>>
+           Inactivo (Oculto)
+        </option>
+      </select>
 
-      <select name="tipo">
+      <label style="font-size:14px; margin-bottom:-5px; color:#f4d58a;">Tipo de producto:</label>
+      <select name="tipo" style="padding:10px;">
         <option value="perfume" <?php echo $perfume['tipo'] === 'perfume' ? 'selected' : ''; ?>>
           Perfume
         </option>
@@ -58,7 +69,6 @@
         </option>
       </select>
 
-      <!-- Tamaño principal (ml) -->
       <input
         type="number"
         name="ml_principal"
@@ -106,7 +116,7 @@
       <label>Nueva imagen (opcional, JPG/PNG):</label>
       <input type="file" name="imagen" accept="image/*">
 
-      <button type="submit" class="btn-add-cart" style="cursor:pointer;">Guardar cambios</button>
+      <button type="submit" class="btn-add-cart" style="cursor:pointer; margin-top:20px;">Guardar cambios</button>
     </form>
   </div>
 </main>

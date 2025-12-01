@@ -12,15 +12,22 @@ body {
   padding: 0;
   font-family: "Poppins", sans-serif;
   color: #ffffff;
+
   background:
     radial-gradient(circle at 75% 50%, rgba(186,139,43,0.35) 0%, rgba(0,0,0,0.9) 80%),
     linear-gradient(135deg, #0a0a0a 0%, #1b1204 40%, #d2a642 100%);
   background-blend-mode: overlay;
-  background-attachment: fixed;
+
+  /* FIX PARA iPHONE */
+  background-attachment: scroll; /* antes fixed */
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
+
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
 }
+
 
 /* ==============================
    HEADER / LOGO / MENÚ
@@ -775,4 +782,831 @@ body {
 /* Que todas las cards del grid estiren igual */
 .cards-grid {
   align-items: stretch;
+}
+/* ==== RESET SUAVE PARA QUE NADA SE DESCUDRE ==== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ==== GRID GENERAL (ESCRITORIO / TABLET) ==== */
+.perfume-section {
+  padding: 32px 16px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  justify-items: center;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* OJO: nada de width fijo acá */
+.perfume-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.perfume-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.perfume-content {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 20px;
+}
+
+/* ==== CELULARES (SIEMPRE 2 CARDS POR FILA) ==== */
+@media (max-width: 768px) {
+
+  .perfume-section {
+    padding: 20px 8px;
+  }
+
+  /* 🔥 Fuerza 2 columnas EXACTAS en móviles */
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: 0 4px;
+    max-width: 100%;
+  }
+
+  /* La card usa TODO el ancho de su columna, sin max ancho que la corte */
+  .perfume-card {
+    max-width: 100% !important;
+    border-radius: 22px;
+  }
+
+  .perfume-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .perfume-content {
+    padding: 10px 8px 14px;
+  }
+
+  .price-box {
+    margin: 8px 0 6px;
+  }
+
+  .price-line {
+    width: 100%;
+    justify-content: space-between;
+    padding: 8px 8px;
+    font-size: 12px;
+  }
+
+  .perfume-desc {
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 6px 0 10px;
+  }
+
+  .perfume-actions {
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .perfume-actions .btn-add-cart,
+  .perfume-actions .btn-wpp-one {
+    flex: 1;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+}
+
+/* Celus MUY pequeños (tipo iPhone SE / 320px de ancho) */
+@media (max-width: 360px) {
+  .cards-grid {
+    gap: 10px;
+    padding: 0 2px;
+  }
+
+  .perfume-content {
+    padding: 8px 6px 12px;
+  }
+
+  .price-line {
+    font-size: 11px;
+  }
+
+  .perfume-actions .btn-add-cart,
+  .perfume-actions .btn-wpp-one {
+    font-size: 10px;
+  }
+}
+
+
+.btn-add-cart,
+.btn-wpp-one {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 13px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* Botón negro (Agregar al carrito) */
+.btn-add-cart {
+  background: #050505;
+  color: #ffffff;
+}
+
+/* Botón dorado (Consultar) */
+.btn-wpp-one {
+  background: #d2a642;        /* dorado Darjam */
+  color: #0b0903;
+}
+
+/* Hover opcional */
+.btn-add-cart:hover {
+  transform: translateY(-1px);
+}
+
+.btn-wpp-one:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* =======================================================================================
+   RESTAURAR DISEÑO ORIGINAL DE LAS CARDS + ALINEACIÓN PERFECTA + RESPONSIVE
+   ======================================================================================= */
+/* =========================================
+   FIX DEFINITIVO DE ALINEACIÓN (Pegar al final)
+   ========================================= */
+
+/* 1. Aseguramos que el contenedor estire todas las tarjetas a la misma altura */
+.cards-grid {
+  align-items: stretch !important;
+}
+
+/* 2. La tarjeta ocupa el 100% de la altura que le da el grid */
+.perfume-card {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 3. El contenido interno se expande para ocupar el hueco */
+.perfume-content {
+  flex: 1 !important; /* Crece para llenar el espacio vertical */
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* 4. LA CLAVE: Empujar la caja de precios hacia el fondo
+   Al poner margin-top: auto, el navegador calcula el espacio sobrante
+   y lo pone ARRIBA de la caja de precios, empujándola al fondo. */
+.price-box {
+  margin-top: auto !important;
+  margin-bottom: 15px; /* Un poco de aire antes de los botones */
+}
+
+/* 5. (Opcional) Uniformidad en la descripción */
+/* Esto ayuda a que si un texto es GIGANTE no rompa la tarjeta,
+   poniendo "..." si se pasa de 3 o 4 líneas */
+.perfume-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Máximo 4 líneas de texto */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Quitamos el min-height fijo para que sea flexible */
+  min-height: auto !important; 
+}
+/* =======================================================
+   FIX DE ALINEACIÓN MILIMÉTRICA (Precios y Botones)
+   ======================================================= */
+
+/* 1. HACER QUE LA TARJETA SEA UN CONTENEDOR FLEXIBLE VERTICAL */
+.perfume-card {
+  height: 100%;       /* Ocupa toda la altura de la fila */
+  display: flex;
+  flex-direction: column;
+}
+
+.perfume-content {
+  flex: 1;            /* Ocupa todo el espacio sobrante */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. ALINEAR EL PRECIO: Forzamos una altura fija para el TÍTULO */
+/* Esto hace que si el título es corto, deje un espacio vacío 
+   para igualar al título largo. Así el precio siempre empieza igual. */
+.perfume-name {
+  min-height: 70px;   /* Altura suficiente para 2 líneas de texto */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alinea el texto arriba */
+  margin-bottom: 12px;
+}
+
+/* 3. ALINEAR LOS BOTONES: Empujarlos siempre al fondo */
+.perfume-actions {
+  margin-top: auto;   /* Esto empuja los botones al final de la tarjeta */
+  padding-top: 15px;  /* Un poco de aire extra arriba de los botones */
+}
+
+/* 4. CONTROLAR LA DESCRIPCIÓN (Opcional pero recomendado) */
+/* Evita que una descripción gigante rompa la tarjeta */
+.perfume-desc {
+  margin-bottom: 10px;
+  /* Si quieres limitar las líneas, descomenta las siguientes 3 líneas: */
+  /* display: -webkit-box; */
+  /* -webkit-line-clamp: 3; */
+  /* -webkit-box-orient: vertical; */
+  /* overflow: hidden; */
+}
+/* =======================================================
+   FIX FINAL DE ALINEACIÓN (ESTRUCTURA RÍGIDA)
+   ======================================================= */
+
+/* 1. ASEGURAR QUE LA TARJETA OCUPE TODO EL ALTO */
+.cards-grid {
+    align-items: stretch;
+}
+
+.perfume-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. EL CONTENEDOR INTERNO ORGANIZA EL ESPACIO */
+.perfume-content {
+    flex: 1; /* Crece para llenar la tarjeta */
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px; /* Espacio extra abajo para que no se pegue */
+}
+
+/* 3. IMAGEN UNIFORME (Por si acaso alguna imagen es más alta que otra) */
+.perfume-image {
+    height: 300px; /* Ajusta este valor según tus fotos */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.perfume-image img {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+/* 4. TÍTULO CON ALTURA FIJA (¡ESTO ALINEA LOS PRECIOS!) */
+/* Reservamos espacio para 2 líneas siempre, aunque tenga 1 */
+.perfume-name {
+    min-height: 64px; /* Altura forzada */
+    display: flex;
+    align-items: flex-end; /* Alinea el texto abajo (opcional) */
+    margin-bottom: 10px;
+    
+    /* Cortar si son más de 2 líneas para no romper */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* 5. PRECIO EN SU SITIO */
+.price-box {
+    /* Al tener el título fijo arriba, esto ya no se mueve */
+    margin-bottom: 15px; 
+}
+
+/* 6. DESCRIPCIÓN LIMITADA */
+/* Esto evita que una descripción larga empuje los botones fuera */
+.perfume-desc {
+    height: 60px; /* Altura fija para la descripción */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Máx 3 líneas */
+    -webkit-box-orient: vertical;
+    margin-bottom: 15px;
+}
+
+/* 7. BOTONES AL FONDO */
+.perfume-actions {
+    margin-top: auto; /* Empuja los botones al final de la tarjeta */
+}
+/* =======================================================
+   FIX v3: IMÁGENES COMPLETAS + ALINEACIÓN DE TEXTOS
+   ======================================================= */
+
+/* 1. ESTRUCTURA FLEXIBLE (Para que las cards estiren igual) */
+.cards-grid {
+  align-items: stretch;
+}
+
+.perfume-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El contenedor de texto ocupa todo el espacio sobrante */
+.perfume-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. RESTAURAR IMÁGENES (¡IMPORTANTE!) */
+/* Esto anula la altura fija que puse antes y las deja naturales */
+.perfume-image {
+    height: auto !important;
+    display: block;
+}
+.perfume-image img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción original */
+    object-fit: cover;
+}
+
+/* 3. ALINEACIÓN POR "RESERVA DE ESPACIO" EN TEXTOS */
+
+/* TÍTULO: Reservamos espacio para 2 líneas SIEMPRE.
+   Si el título es corto, quedará un hueco, pero la caja de precio
+   empezará a la misma altura en todas las cards. */
+.perfume-name {
+  /* Altura mínima calculada para 2 líneas de tu fuente (ajusta si hace falta) */
+  min-height: 64px;
+  display: flex;
+  align-items: flex-start; /* Alinea el texto arriba */
+  margin-bottom: 10px;
+
+  /* Seguridad: si un nombre tiene 3 líneas, lo corta con "..." */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* PRECIO: Simplemente aseguramos su margen */
+.price-box {
+    margin-bottom: 15px;
+}
+
+/* DESCRIPCIÓN: También reservamos espacio fijo (ej. 3 líneas)
+   para que los botones de abajo empiecen iguales. */
+.perfume-desc {
+  min-height: 60px; /* Altura aprox para 3 líneas */
+  margin-bottom: 15px;
+
+  /* Seguridad: corta si pasa de 3 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 4. BOTONES AL FONDO */
+/* La guinda del pastel: esto empuja los botones al borde inferior */
+.perfume-actions {
+  margin-top: auto;
+}
+/* =======================================================
+   FIX ALINEACIÓN MÓVIL (Cuadrícula Perfecta)
+   ======================================================= */
+
+@media (max-width: 768px) {
+
+  /* 1. Forzar 2 columnas exactas */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 50% cada una */
+    gap: 12px; /* Espacio entre tarjetitas */
+    align-items: stretch; /* Estirar todas a la misma altura */
+  }
+
+  /* 2. Ajuste de Textos (Más pequeños que en PC) */
+  
+  /* TÍTULO: Reservamos espacio para 2 líneas de texto pequeño */
+  .perfume-name {
+    font-size: 14px;      /* Letra ajustada */
+    min-height: 44px;     /* Altura mínima exacta para 2 líneas en móvil */
+    margin-bottom: 8px;
+    
+    /* Aseguramos que corte si se pasa */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* DESCRIPCIÓN: Reservamos espacio para 3 líneas de texto muy pequeño */
+  .perfume-desc {
+    font-size: 11px;
+    min-height: 50px;     /* Altura aprox para 3 líneas en móvil */
+    margin-bottom: 10px;
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* 3. Botones y espacios */
+  .perfume-content {
+    padding: 12px 8px 14px; /* Padding un poco más compacto */
+  }
+
+  .perfume-actions {
+    margin-top: auto;       /* Empujar al fondo siempre */
+    gap: 6px;               /* Botones más pegaditos */
+  }
+
+  /* Botones más pequeños para que quepan bien */
+  .btn-add-cart,
+  .btn-wpp-one {
+    font-size: 10px;
+    padding: 8px 4px;
+    white-space: nowrap; /* Evita que el texto del botón se parta en 2 líneas */
+  }
+}
+
+
+/* =======================================================
+   FIX FINAL PARA MÓVIL (Botones verticales y textos legibles)
+   ======================================================= */
+
+@media (max-width: 768px) {
+
+  /* 1. Ajuste general del Grid */
+  .perfume-section {
+    padding: 20px 10px 40px; /* Un poco de margen a los lados */
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    gap: 10px; /* Espacio equilibrado */
+    align-items: stretch; 
+  }
+
+  /* 2. Tarjeta */
+  .perfume-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px; /* Bordes suaves */
+  }
+
+  .perfume-content {
+    padding: 10px 8px 12px; /* Espacio interno cómodo */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 3. ARREGLO DEL TÍTULO (Que se lea bien) */
+  .perfume-name {
+    font-size: 13px;
+    line-height: 1.25;
+    min-height: 34px; /* Altura para 2 líneas */
+    margin-bottom: 6px;
+    
+    /* Esto permite que el texto baje de línea sin cortarse raro */
+    white-space: normal; 
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Marca más pequeña */
+  .perfume-name span {
+      font-size: 10px;
+      margin-bottom: 2px;
+      display: block;
+  }
+
+  /* 4. ARREGLO PRECIOS (Si no cabe, que baje) */
+  .price-box {
+      padding: 6px 8px;
+      margin-bottom: 10px;
+  }
+  
+  .price-line {
+      font-size: 10px;
+      flex-wrap: wrap; /* Si no cabe, baja el precio */
+      gap: 2px;
+  }
+
+  /* 5. ARREGLO BOTONES (VERTICALES) - ¡La clave! */
+  .perfume-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column; /* Uno encima del otro */
+    gap: 6px; /* Espacio entre botones */
+    width: 100%;
+  }
+
+  .btn-add-cart,
+  .btn-wpp-one {
+    width: 100%; /* Ocupan todo el ancho */
+    font-size: 10px !important;
+    padding: 8px 0 !important; /* Más altos para poder tocar con el dedo */
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Ajuste descripción para ganar espacio */
+  .perfume-desc {
+      display: none; /* Opcional: Ocultar descripción en móvil para limpiar diseño */
+      /* Si quieres dejarla, borra la línea de arriba y usa: font-size: 9px; */
+  }
+}
+
+/* =======================================================
+   FIX FINAL MÓVIL v2 (Texto Visible + Botones Verticales)
+   ======================================================= */
+
+@media (max-width: 768px) {
+
+  /* 1. Ajuste del Grid (Espacio seguro) */
+  .perfume-section {
+    padding: 20px 8px 40px; /* Márgenes laterales pequeños */
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px; /* Espacio entre tarjetas */
+    align-items: stretch;
+  }
+
+  /* 2. Tarjeta */
+  .perfume-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+  }
+
+  .perfume-content {
+    padding: 10px 8px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 3. ARREGLO DEL TÍTULO (¡Aquí está la solución!) */
+  .perfume-name {
+    /* Tamaño legible pero compacto */
+    font-size: 13px;
+    line-height: 1.3;
+    
+    /* Altura fija para mantener alineación (2 líneas aprox) */
+    height: 34px; 
+    margin-bottom: 6px;
+    
+    /* ESTO ARREGLA LOS GUIONES RAROS: */
+    white-space: normal;      /* Permite varias líneas */
+    word-wrap: break-word;    /* Rompe palabras largas si es necesario */
+    word-break: break-word;   /* Asegura que no se desborde */
+    
+    /* Cortar limpiamente si se pasa de 2 líneas */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* La marca (DIOR, ARMANI...) */
+  .perfume-name span {
+      font-size: 10px;
+      font-weight: 700;
+      color: #e3b64e; /* Color dorado para resaltar */
+      display: block;
+      margin-bottom: 2px;
+  }
+
+  /* 4. Precio Compacto */
+  .price-box {
+      padding: 6px;
+      margin-bottom: 8px;
+  }
+  
+  .price-line {
+      font-size: 10px;
+      flex-direction: column; /* Precio abajo del texto "100ml" si no cabe */
+      align-items: flex-start;
+      gap: 0;
+  }
+  .price-line span {
+      font-size: 11px; /* Precio un pelín más grande */
+  }
+
+  /* 5. BOTONES VERTICALES (Lo que te gustó) */
+  .perfume-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column; /* Verticales */
+    gap: 6px;
+    width: 100%;
+  }
+
+  .btn-add-cart,
+  .btn-wpp-one {
+    width: 100%;
+    font-size: 10px !important;
+    padding: 10px 0 !important; /* Altura cómoda para el dedo */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Ocultamos descripción en móvil para limpieza visual */
+  .perfume-desc {
+      display: none; 
+  }
+}
+/* =======================================================
+   FIX FINAL V3: MÓVIL (Botones Verticales + Títulos Visibles)
+   ======================================================= */
+
+@media (max-width: 768px) {
+
+  /* 1. Ajuste de márgenes de la pantalla */
+  .perfume-section {
+    padding: 20px 8px 50px; /* Márgenes laterales seguros */
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    gap: 10px; 
+    align-items: stretch; /* Estirar todas igual */
+  }
+
+  /* 2. Tarjeta */
+  .perfume-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden; /* Asegura que nada se salga de los bordes */
+  }
+
+  .perfume-content {
+    padding: 10px 8px 12px;
+    flex: 1; /* Ocupa todo el espacio disponible */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 3. ARREGLO DEL TÍTULO (SOLUCIÓN AL "...") */
+  .perfume-name {
+    font-size: 12px;         /* Un poco más pequeño para que quepa bien */
+    line-height: 1.3;
+    
+    /* CAMBIO CLAVE: Usamos min-height en vez de height fijo */
+    height: auto !important; 
+    min-height: 32px;        /* Reserva espacio para alineación */
+    margin-bottom: 6px;
+    width: 100%;
+
+    /* FUERZA EL TEXTO A MOSTRARSE: */
+    white-space: normal !important; /* Permite saltos de línea normales */
+    text-overflow: clip !important; /* Evita que salgan los tres puntos (...) */
+    overflow: visible !important;   /* Deja ver el texto */
+    
+    display: block;          /* Comportamiento estándar de bloque */
+  }
+
+  /* Marca (Dior, etc) */
+  .perfume-name span {
+      font-size: 10px;
+      font-weight: 700;
+      color: #e3b64e;
+      display: block;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+  }
+
+  /* 4. Precio */
+  .price-box {
+      padding: 6px 8px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+  }
+  
+  .price-line {
+      font-size: 10px;
+      flex-direction: column; /* Pone el precio debajo si no cabe */
+      align-items: flex-start;
+      gap: 2px;
+  }
+  .price-line span {
+      font-size: 11px;
+      color: #f4d58a;
+  }
+
+  /* 5. BOTONES VERTICALES (Perfectos) */
+  .perfume-actions {
+    margin-top: auto; /* Empuja al fondo */
+    display: flex;
+    flex-direction: column; /* Uno encima del otro */
+    gap: 8px; /* Espacio entre botones */
+    width: 100%;
+  }
+
+  .btn-add-cart,
+  .btn-wpp-one {
+    width: 100%;
+    font-size: 10px !important;
+    padding: 9px 0 !important;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  /* Ocultar descripción para limpiar visualmente */
+  .perfume-desc {
+      display: none; 
+  }
+}
+/* ==============================
+   RESETEO Y FONDO (Estilo Golden Night)
+============================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+
+  /* AQUÍ ESTÁ EL CAMBIO DEL FONDO */
+  /* Degradado vertical: Negro arriba (0%) -> Dorado oscuro abajo (100%) */
+  background: linear-gradient(180deg, #020202 0%, #0f0f0f 40%, #7a5c16 100%);
+  
+  /* Asegura que el fondo cubra toda la pantalla siempre */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Esto hace que el fondo se quede quieto al bajar (efecto lujoso) */
+  background-size: cover;
+
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+/* ==============================
+   FONDO AJUSTADO (Más luz arriba)
+============================== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+
+  /* CAMBIO: */
+  /* 1. Empezamos en #1a1a1a (Gris oscuro suave) en lugar de negro puro. */
+  /* 2. El dorado empieza a aparecer un poco antes para dar calidez. */
+  background: linear-gradient(180deg, #1a1a1a 0%, #3d2e10 50%, #856518 100%);
+
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: cover;
+
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
 }

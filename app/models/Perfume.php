@@ -3,23 +3,25 @@
 
 class Perfume
 {
-    // Para mostrar perfumes en la página de perfumes
+    // Para mostrar perfumes en la página pública (SOLO ACTIVOS)
     public static function allPerfumes()
     {
         $pdo = Database::getConnection();
-        $stmt = $pdo->query("SELECT * FROM perfumes WHERE tipo = 'perfume' ORDER BY created_at DESC");
+        // Agregamos "AND activo = 1" para que no se vean los ocultos
+        $stmt = $pdo->query("SELECT * FROM perfumes WHERE tipo = 'perfume' AND activo = 1 ORDER BY created_at DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Para mostrar decants en la página de decants
+    // Para mostrar decants en la página pública (SOLO ACTIVOS)
     public static function allDecants()
     {
         $pdo = Database::getConnection();
-        $stmt = $pdo->query("SELECT * FROM perfumes WHERE tipo = 'decant' ORDER BY created_at DESC");
+        // Agregamos "AND activo = 1" para que no se vean los ocultos
+        $stmt = $pdo->query("SELECT * FROM perfumes WHERE tipo = 'decant' AND activo = 1 ORDER BY created_at DESC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Para el panel admin (lista completa)
+    // Para el panel admin (lista completa, incluye inactivos)
     public static function all()
     {
         $pdo = Database::getConnection();
@@ -61,7 +63,7 @@ class Perfume
         ]);
     }
 
-    // Actualizar perfume / decant
+    // Actualizar perfume / decant (AHORA INCLUYE ACTIVO)
     public static function update($id, $data)
     {
         $pdo = Database::getConnection();
@@ -76,7 +78,8 @@ class Perfume
                 precio_5ml   = :precio_5ml,
                 precio_10ml  = :precio_10ml,
                 descripcion  = :descripcion,
-                imagen       = :imagen
+                imagen       = :imagen,
+                activo       = :activo
             WHERE id = :id
         ");
 
@@ -91,6 +94,7 @@ class Perfume
             ':precio_10ml'  => $data['precio_10ml'],
             ':descripcion'  => $data['descripcion'],
             ':imagen'       => $data['imagen'],
+            ':activo'       => $data['activo'] // Guardamos el estado (1 o 0)
         ]);
     }
 

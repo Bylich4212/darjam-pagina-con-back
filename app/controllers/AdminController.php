@@ -139,6 +139,9 @@ class AdminController
         $marca       = $_POST['marca']        ?? '';
         $tipo        = $_POST['tipo']         ?? 'perfume';
         $mlPrincipal = $_POST['ml_principal'] ?? ($perfumeActual['ml_principal'] ?? 100);
+        
+        // CAPTURAMOS EL CAMPO ACTIVO (Por defecto 1 si no viene)
+        $activo      = isset($_POST['activo']) ? (int)$_POST['activo'] : 1;
 
         $precio100   = $_POST['precio_100ml'] ?? null;
         $precio5     = $_POST['precio_5ml']   ?? null;
@@ -199,6 +202,7 @@ class AdminController
             'precio_10ml'  => $precio10,
             'descripcion'  => $descripcion,
             'imagen'       => $rutaImagen,
+            'activo'       => $activo // Enviamos el estado al modelo
         ]);
 
         header("Location: index.php?c=admin&a=listPerfumes");
